@@ -17,7 +17,7 @@ xkcd=xkcd_grab()
 
 
 custom_keyboard=[['Another Random Strip']]
-reply_markup=ReplyKeyboardMarkup(custom_keyboard)
+reply_markup=ReplyKeyboardMarkup(custom_keyboard,resize_keyboard=True)
 
 def start(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
