@@ -1,5 +1,10 @@
 from xkcd_scraper import xkcd_grab
-Api_Key="371007353:AAFKG29_gD1UjVl6aeeTe8NquIm8f9g_mVs"
+import pickle
+
+api_dict=None
+with open('/home/uday/telegram_api.key','rb') as f:
+    api_dict=pickle.load(f)
+Api_Key=api_dict['key']
 
 from telegram.ext import Updater
 from telegram.ext import CommandHandler,MessageHandler,Filters
