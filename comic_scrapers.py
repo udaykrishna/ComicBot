@@ -10,7 +10,7 @@ from json import loads
 def random_grab():
     grabers=[xkcd_grab, explosm_grab, penny_arcade_grab, nedroid_grab,
                     moonbeard_grab, smbc_grab, wumo_grab, loading_artist_grab,
-                    cad_grab,adamathome_grab]
+                    cad_grab, adamathome_grab]
 
     return random.choice(grabers)()
 
