@@ -11,6 +11,7 @@ def random_grab():
     grabers=[xkcd_grab, explosm_grab, penny_arcade_grab, nedroid_grab,
                     moonbeard_grab, smbc_grab, wumo_grab, loading_artist_grab,
                     cad_grab,adamathome_grab]
+
     return random.choice(grabers)()
 
 class xkcd_grab:
@@ -130,7 +131,7 @@ class cad_grab(xkcd_grab):
          return page
 
     def get_img_url(self,parsed):
-        return loads(parsed.content)['comic']
+        return str(loads(parsed.content)['comic'])
 
 class adamathome_grab(xkcd_grab):
     """
