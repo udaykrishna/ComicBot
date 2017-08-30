@@ -14,7 +14,7 @@ class xkcd_grab:
     def __init__(self):
         self.name="xkcd_grab"
         self.rurl="https://c.xkcd.com/random/comic/"
-        self.details=comic('xkcd','Randall Munroe','https://xkcd.com/')
+        self.details=comic('XKCD','Randall Munroe','https://xkcd.com/')
 
     def get_details(self):
         return str(self.details)

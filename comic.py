@@ -5,4 +5,8 @@ class comic:
         self.author=author
 
     def __repr__(self):
-        return str("A Strip from Comic "+self.name+", by "+str(self.author)+"\n"+self.url)
+        if type(self.author) is list:
+            self.author_str= ','.join(self.author[:-1])+' and '+self.author[-1]
+        else:
+            self.author_str=str(self.author)
+        return str("A Strip from Comic "+self.name+" by "+self.author_str+"\n"+self.url)

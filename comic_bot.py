@@ -13,12 +13,11 @@ Api_Key=api_dict['key']
 updater=Updater(token=Api_Key)
 dispatcher=updater.dispatcher
 
-random_grab=cs.random_grab()
-
 custom_keyboard=[['Another Random Strip']]
 reply_markup=ReplyKeyboardMarkup(custom_keyboard,resize_keyboard=True)
 
 def start(bot, update):
+    random_grab=cs.random_grab()
     try:
         bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         bot.send_photo(chat_id=update.message.chat_id,photo=random_grab.get_random(),reply_markup=reply_markup)
@@ -28,6 +27,7 @@ def start(bot, update):
         bot.send_message(chat_id=update.message.chat_id,text="something went wrong")
 
 def message(bot,update):
+    random_grab=cs.random_grab()
     try:
         bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         pic=random_grab.get_random()
