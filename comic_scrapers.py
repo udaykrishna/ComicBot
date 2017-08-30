@@ -3,14 +3,20 @@ import lxml.html as ht
 import datetime as dt
 import random
 from comic import comic
+from json import loads
 
 #week_map={'sunday':0,'monday':1,'tuesday':2,'wednesday':3,'thursday':4,'friday':5,'saturday':6}
+
 def random_grab():
-        grabers=[xkcd_grab, explosm_grab, penny_arcade_grab, nedroid_grab,
-                        moonbeard_grab, smbc_grab]
-        return random.choice(grabers)()
+    grabers=[xkcd_grab, explosm_grab, penny_arcade_grab, nedroid_grab,
+                    moonbeard_grab, smbc_grab, wumo_grab, loading_artist_grab,
+                    cad_grab,adamathome_grab]
+    return random.choice(grabers)()
 
 class xkcd_grab:
+    """
+    Base template if random gives another page as response
+    """
     def __init__(self):
         self.name="xkcd_grab"
         self.rurl="https://c.xkcd.com/random/comic/"
@@ -41,6 +47,9 @@ class explosm_grab(xkcd_grab):
         return 'http://'+parsed.xpath('string(//*[@id="main-comic"]/@src)')[2:]
 
 class penny_arcade_grab(xkcd_grab):
+    """
+    Base template if no default random is implemented
+    """
     def __init__(self):
         self.name="penny_arcade_grab"
         self.burl='https://www.penny-arcade.com/comic/'
@@ -86,3 +95,51 @@ class smbc_grab(xkcd_grab):
 
     def get_img_url(self,parsed):
         return parsed.xpath('string(//*[@id="cc-comic"]/@src)')
+
+class wumo_grab(penny_arcade_grab):
+    def __init__(self):
+        self.name="wumo_grab"
+        self.burl="http://wumo.com/wumo/"
+        self.details=comic('Wumo',['Mikael Wulff', 'Anders Morgenthaler'],'http://wumo.com/')
+    def get_img_url(self,parsed):
+        return 'http://wumo.com'+parsed.xpath('string(//*[@id="main"]/article[1]/div/a/img/@src)')
+
+    def get_random(self):
+        return self.get_img_url(self.request_page(self.burl+self.gen_rand_rel_date(dow=[0,1,2,3,4,5,6])))
+
+class loading_artist_grab(xkcd_grab):
+    def __init__(self):
+        self.name="loading_artist_grab"
+        self.rurl="https://loadingartist.com/random"
+        self.details=comic('Loading Artist','Gregor Czaykowski','https://loadingartist.com/')
+
+    def get_img_url(self,parsed):
+        return parsed.xpath('string(//div[@class="comic"]/a/img/@src)')
+
+class cad_grab(xkcd_grab):
+    """
+    Base template if random url response is in json
+    """
+    def __init__(self):
+        self.name="cad_grab"
+        self.rurl="https://cad-comic.com/wp-admin/admin-ajax.php?action=get_nav_post&nav_type=random"
+        self.details=comic('Ctrl+Alt+Del','Tim Buckley','https://cad-comic.com/')
+
+    def request_page(self,url):
+         page=requests.get(url)
+         return page
+
+    def get_img_url(self,parsed):
+        return loads(parsed.content)['comic']
+
+class adamathome_grab(xkcd_grab):
+    """
+    Base template for all gocomics
+    """
+    def __init__(self):
+        self.name="adamathome_grab"
+        self.rurl="http://www.gocomics.com/random/adamathome"
+        self.details=comic('Adam@Home',['Brian Basset (creater)','Rob Harrell (current artist)'],'http://www.gocomics.com/adamathome')
+
+    def get_img_url(self,parsed):
+        return parsed.xpath('string(//*[@id="js-item-start"]/div/div[1]/div[1]/a/picture/img/@src)')

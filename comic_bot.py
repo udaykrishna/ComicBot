@@ -23,8 +23,8 @@ def start(bot, update):
         bot.send_photo(chat_id=update.message.chat_id,photo=random_grab.get_random(),reply_markup=reply_markup)
         bot.send_message(chat_id=update.message.chat_id,text=str(random_grab.details),disable_web_page_preview=True)
     except Exception as e:
-        print('something went wrong at start\n',e)
-        bot.send_message(chat_id=update.message.chat_id,text="something went wrong")
+        print('something went wrong at start\n',e,'\n',+str(random_grab.name))
+        bot.send_message(chat_id=update.message.chat_id,text="something went wrong [0]"+str(random_grab.name))
 
 def message(bot,update):
     random_grab=cs.random_grab()
@@ -38,8 +38,8 @@ def message(bot,update):
             bot.send_photo(chat_id=update.message.chat_id,photo=pic,reply_markup=reply_markup)
         bot.send_message(chat_id=update.message.chat_id,text=str(random_grab.details),disable_web_page_preview=True)
     except Exception as e:
-        print('something went wrong at message\n',e)
-        bot.send_message(chat_id=update.message.chat_id,text="something went wrong")
+        print('something went wrong at message at \n', e)
+        bot.send_message(chat_id=update.message.chat_id,text="something went wrong [1]"+str(random_grab.name))
 
 start_handler=CommandHandler('start',start)
 message_handler=MessageHandler(Filters.text,message)
