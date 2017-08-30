@@ -5,4 +5,4 @@ class comic:
         self.author=author
 
     def __repr__(self):
-        return str("A Strip from Comic "+self.name+", by "+self.author+"\n"+self.url)
+        return str("A Strip from Comic "+self.name+", by "+str(self.author)+"\n"+self.url)
