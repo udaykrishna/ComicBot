@@ -31,10 +31,11 @@ def message(bot,update):
         bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         pic=random_grab.get_random()
         if update.message.text == custom_keyboard[0][0]:
-            bot.send_message(chat_id=update.message.chat_id,text="")
+            bot.send_message(chat_id=update.message.chat_id,text=str(random_grab.details))
             bot.send_photo(chat_id=update.message.chat_id,photo=pic,reply_markup=reply_markup)
         else:
             bot.send_message(chat_id=update.message.chat_id,text="I no understand what you say, but here's a comic strip :)")
+            bot.send_message(chat_id=update.message.chat_id,text=str(random_grab.details))
             bot.send_photo(chat_id=update.message.chat_id,photo=pic,reply_markup=reply_markup)
     except Exception as e:
         print('something went wrong at message',e)

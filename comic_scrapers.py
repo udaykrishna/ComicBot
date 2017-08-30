@@ -10,9 +10,11 @@ class random_grab:
         self.name="random_grab"
         self.grabers=[xkcd_grab, explosm_grab, penny_arcade_grab, nedroid_grab,
                         moonbeard_grab, smbc_grab]
+        self.details='random_grab'
 
     def get_random(self):
         random_grabber=random.choice(self.grabers)
+        self.details=random_grabber.details
         return random_grabber().get_random()
 
 class xkcd_grab:
