@@ -5,23 +5,19 @@ import random
 from comic import comic
 
 #week_map={'sunday':0,'monday':1,'tuesday':2,'wednesday':3,'thursday':4,'friday':5,'saturday':6}
-class random_grab:
-    def __init__(self):
-        self.name="random_grab"
-        self.grabers=[xkcd_grab, explosm_grab, penny_arcade_grab, nedroid_grab,
+def random_grab():
+        grabers=[xkcd_grab, explosm_grab, penny_arcade_grab, nedroid_grab,
                         moonbeard_grab, smbc_grab]
-        self.details='random_grab'
-
-    def get_random(self):
-        random_grabber=random.choice(self.grabers)
-        self.details=random_grabber.details
-        return random_grabber().get_random()
+        return random.choice(grabers)()
 
 class xkcd_grab:
     def __init__(self):
         self.name="xkcd_grab"
         self.rurl="https://c.xkcd.com/random/comic/"
         self.details=comic('xkcd','Randall Munroe','https://xkcd.com/')
+
+    def get_details(self):
+        return str(self.details)
 
     def request_page(self,url):
          page=requests.get(url)

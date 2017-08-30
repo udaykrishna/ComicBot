@@ -5,4 +5,4 @@ class comic:
         self.author=author
 
     def __repr__(self):
-        return "Strip is from Comic "+self.name+", by "+self.author+" and is hosted at "+self.url
+        return str("A Strip from Comic "+self.name+", by "+self.author+"\n"+self.url)
