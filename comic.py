@@ -9,4 +9,4 @@ class comic:
             self.author_str= ','.join(self.author[:-1])+' and '+self.author[-1]
         else:
             self.author_str=str(self.author)
-        return str("A Strip from Comic "+self.name+" by "+self.author_str+"\n"+self.url)
+        return str("A Strip from "+self.name+" by "+self.author_str+"\n"+self.url)

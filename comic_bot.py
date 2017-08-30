@@ -6,7 +6,7 @@ from telegram.ext import CommandHandler,MessageHandler,Filters
 from telegram import ChatAction,ReplyKeyboardMarkup
 
 api_dict=None
-with open('/home/uday/telegram_api.key','rb') as f:
+with open('/home/ubuntu/telegram_api.key','rb') as f:
     api_dict=pickle.load(f)
 Api_Key=api_dict['key']
 
