@@ -22,6 +22,7 @@ def start(bot, update):
     try:
         bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         bot.send_photo(chat_id=update.message.chat_id,photo=random_grab.get_random(),reply_markup=reply_markup)
+        bot.send_message(chat_id=update.message.chat_id,text=str(random_grab.details),disable_web_page_preview=True)
     except Exception as e:
         print('something went wrong at start\n',e)
         bot.send_message(chat_id=update.message.chat_id,text="something went wrong")
