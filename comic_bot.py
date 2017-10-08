@@ -8,7 +8,7 @@ from telegram import ChatAction, ReplyKeyboardMarkup, ReplyKeyboardRemove, Inlin
 
 
 api_dict = None
-with open('/home/ubuntu/telegram_api.key', 'rb') as f:
+with open('/home/uday/telegram_api.key', 'rb') as f:
     api_dict = pickle.load(f)
 Api_Key = api_dict['key']
 
@@ -79,7 +79,6 @@ def message(bot, update):
                          text="something went wrong [1]" + str(random_grab.name))
 
 def callback_message(bot, update):
-    update.callback_query.answer()
     random_grab=cu.comic_graber_names[update.callback_query.data]()
     try:
         bot.send_chat_action(chat_id=update.callback_query.message.chat.id,
@@ -98,6 +97,7 @@ def callback_message(bot, update):
                 e, '\n', +str(random_grab.name))
         bot.send_message(chat_id=update.callback_query.message.chat.id,
                         text="something went wrong" + str(random_grab.name))
+    bot.answer_callback_query(update.callback_query.id)
 
 start_handler = CommandHandler('start', start)
 ck_handler = CommandHandler('ck', clear_keyboard)
