@@ -8,14 +8,14 @@ from telegram import ChatAction, ReplyKeyboardMarkup, ReplyKeyboardRemove, Inlin
 
 
 api_dict = None
-with open('/home/uday/telegram_api.key', 'rb') as f:
+with open('/home/ubuntu/telegram_api.key', 'rb') as f:
     api_dict = pickle.load(f)
 Api_Key = api_dict['key']
 
 updater = Updater(token=Api_Key)
 dispatcher = updater.dispatcher
 
-custom_keyboard = [['Another Random Strip'], ['Random From A Specific Comic']]
+custom_keyboard = [['Comic List', 'Random Strip']]
 reply_markup = ReplyKeyboardMarkup(custom_keyboard, resize_keyboard=True)
 
 # TODO INcase of TIMEOUT Send some message
@@ -52,16 +52,16 @@ def message(bot, update):
                              action=ChatAction.TYPING)
         pic = random_grab.get_random()
         if update.message.text == custom_keyboard[0][0]:
-            bot.send_photo(chat_id=update.message.chat_id,
-                           photo=pic, reply_markup=reply_markup)
-            sent = True
-        elif update.message.text == custom_keyboard[1][0]:
             button_list = [InlineKeyboardButton(
                 cu.comic_details[a].name, callback_data=a().name) for a in cu.grabers]
             in_reply_markup = InlineKeyboardMarkup(
                 cu.build_menu(button_list, n_cols=2))
             bot.send_message(chat_id=update.message.chat_id,
                              text="Select a comic", reply_markup=in_reply_markup)
+        elif update.message.text == custom_keyboard[0][1]:
+            bot.send_photo(chat_id=update.message.chat_id,
+                           photo=pic, reply_markup=reply_markup)
+            sent = True
         else:
             bot.send_message(chat_id=update.message.chat_id,
                              text="I no understand what you say, but here's a comic strip :)")
@@ -69,7 +69,7 @@ def message(bot, update):
                            photo=pic, reply_markup=reply_markup)
             sent = True
         if sent:
-            another_button = [InlineKeyboardButton("Next from same comic", callback_data=random_grab.name)]
+            another_button = [InlineKeyboardButton("More \""+random_grab.details.name+"\"!", callback_data=random_grab.name)]
             next_button_markup = InlineKeyboardMarkup(cu.build_menu(another_button, n_cols=1))
             bot.send_message(chat_id=update.message.chat_id, text=str(
                 random_grab.details), disable_web_page_preview=True, reply_markup = next_button_markup)
@@ -86,7 +86,7 @@ def callback_message(bot, update):
         bot.send_photo(chat_id=update.callback_query.message.chat.id,
                         photo=random_grab.get_random(), reply_markup=reply_markup)
         another_button = [InlineKeyboardButton(
-                "One more strip please", callback_data=random_grab.name)]
+                "One more \""+random_grab.details.name+"\"  please", callback_data=random_grab.name)]
         next_button_markup = InlineKeyboardMarkup(
                 cu.build_menu(another_button, n_cols=1))
         bot.send_message(chat_id=update.callback_query.message.chat.id, text="As Requested. "+str(
