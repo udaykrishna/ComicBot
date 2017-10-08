@@ -79,6 +79,7 @@ def message(bot, update):
                          text="something went wrong [1]" + str(random_grab.name))
 
 def callback_message(bot, update):
+    update.callback_query.answer()
     random_grab=cu.comic_graber_names[update.callback_query.data]()
     try:
         bot.send_chat_action(chat_id=update.callback_query.message.chat.id,
