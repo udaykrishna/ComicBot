@@ -8,7 +8,7 @@ from telegram import ChatAction, ReplyKeyboardMarkup, ReplyKeyboardRemove, Inlin
 
 
 api_dict = None
-with open('/home/ububtu/telegram_api.key', 'rb') as f:
+with open('/home/ubuntu/telegram_api.key', 'rb') as f:
     api_dict = pickle.load(f)
 Api_Key = api_dict['key']
 
@@ -69,8 +69,10 @@ def message(bot, update):
                            photo=pic, reply_markup=reply_markup)
             sent = True
         if sent:
+            another_button = [InlineKeyboardButton("Next from same comic", callback_data=random_grab.name)]
+            next_button_markup = InlineKeyboardMarkup(cu.build_menu(another_button, n_cols=1))
             bot.send_message(chat_id=update.message.chat_id, text=str(
-                random_grab.details), disable_web_page_preview=True)
+                random_grab.details), disable_web_page_preview=True, reply_markup = next_button_markup)
     except Exception as e:
         print('something went wrong at message at \n', e)
         bot.send_message(chat_id=update.message.chat_id,
