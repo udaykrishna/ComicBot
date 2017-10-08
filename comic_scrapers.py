@@ -6,14 +6,6 @@ from comic import comic
 from json import loads
 
 #week_map={'sunday':0,'monday':1,'tuesday':2,'wednesday':3,'thursday':4,'friday':5,'saturday':6}
-
-def random_grab():
-    grabers=[xkcd_grab, explosm_grab, penny_arcade_grab, nedroid_grab,
-                    moonbeard_grab, smbc_grab, wumo_grab, loading_artist_grab,
-                    cad_grab, adamathome_grab]
-
-    return random.choice(grabers)()
-
 class xkcd_grab:
     """
     Base template if random gives another page as response
