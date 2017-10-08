@@ -8,7 +8,7 @@ from telegram import ChatAction, ReplyKeyboardMarkup, ReplyKeyboardRemove, Inlin
 
 
 api_dict = None
-with open('/home/uday/telegram_api.key', 'rb') as f:
+with open('/home/ububtu/telegram_api.key', 'rb') as f:
     api_dict = pickle.load(f)
 Api_Key = api_dict['key']
 
@@ -57,7 +57,7 @@ def message(bot, update):
             sent = True
         elif update.message.text == custom_keyboard[1][0]:
             button_list = [InlineKeyboardButton(
-                cu.comic_details[a].name, callback_data="hi") for a in cu.grabers]
+                cu.comic_details[a].name, callback_data=a().name) for a in cu.grabers]
             in_reply_markup = InlineKeyboardMarkup(
                 cu.build_menu(button_list, n_cols=2))
             bot.send_message(chat_id=update.message.chat_id,
@@ -77,19 +77,24 @@ def message(bot, update):
                          text="something went wrong [1]" + str(random_grab.name))
 
 def callback_message(bot, update):
-    random_grab=cu.comic_graber_names[update.callback_query.data]
+    random_grab=cu.comic_graber_names[update.callback_query.data]()
     try:
-        bot.send_chat_action(chat_id=update.message.chat_id,
+        bot.send_chat_action(chat_id=update.callback_query.message.chat.id,
                                 action=ChatAction.TYPING)
-        bot.send_photo(chat_id=update.message.chat_id,
+        bot.send_photo(chat_id=update.callback_query.message.chat.id,
                         photo=random_grab.get_random(), reply_markup=reply_markup)
-        bot.send_message(chat_id=update.message.chat_id, text=str(
-            random_grab.details), disable_web_page_preview=True)
+        another_button = [InlineKeyboardButton(
+                "One more strip please", callback_data=random_grab.name)]
+        next_button_markup = InlineKeyboardMarkup(
+                cu.build_menu(another_button, n_cols=1))
+        bot.send_message(chat_id=update.callback_query.message.chat.id, text="As Requested. "+str(
+            random_grab.details), disable_web_page_preview=True, reply_markup = next_button_markup)
+
     except Exception as e:
         print('something went wrong at start\n',
                 e, '\n', +str(random_grab.name))
-        bot.send_message(chat_id=update.message.chat_id,
-                        text="something went wrong [0]" + str(random_grab.name))
+        bot.send_message(chat_id=update.callback_query.message.chat.id,
+                        text="something went wrong" + str(random_grab.name))
 
 start_handler = CommandHandler('start', start)
 ck_handler = CommandHandler('ck', clear_keyboard)

@@ -1,6 +1,6 @@
 import comic_scrapers as cs
 import comic
-
+import random
 grabers=[cs.xkcd_grab, cs.explosm_grab, cs.penny_arcade_grab, cs.nedroid_grab,
                 cs.moonbeard_grab, cs.smbc_grab, cs.wumo_grab, cs.loading_artist_grab,
                 cs.cad_grab, cs.adamathome_grab]
