@@ -123,7 +123,7 @@ class cad_grab(xkcd_grab):
          return page
 
     def get_img_url(self,parsed):
-        return str(loads(parsed.content)['comic'])
+        return str(loads(parsed.content.decode())['comic'])
 
 class adamathome_grab(xkcd_grab):
     """
