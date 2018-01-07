@@ -87,7 +87,7 @@ class smbc_grab(xkcd_grab):
         self.details=comic('Saturday Morning Breakfast Cereal','Zach Weiner','http://www.smbc-comics.com/')
 
     def get_img_url(self,parsed):
-        return parsed.xpath('string(//*[@id="cc-comic"]/@src)')
+        return "http://www.smbc-comics.com"+parsed.xpath('string(//*[@id="cc-comic"]/@src)')
 
 class wumo_grab(penny_arcade_grab):
     def __init__(self):
