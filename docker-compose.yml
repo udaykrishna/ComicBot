@@ -1,0 +1,15 @@
+version: '3.6'
+services:
+  comicbot:
+    build: 
+      context: src
+      dockerfile: Dockerfile
+    image: comickidbot
+    secrets:
+      - source: comickidbot
+        target: api_key
+    working_dir: /comicbot/
+    command: python comic_bot.py
+secrets:
+  comickidbot:
+    file: comickidbot.json

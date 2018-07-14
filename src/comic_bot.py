@@ -1,16 +1,19 @@
 import comic_scrapers as cs
 import comic_utils as cu
-import pickle
+import json
+from logconfig import logger
 
 from telegram.ext import Updater, CallbackQueryHandler, ConversationHandler
 from telegram.ext import CommandHandler, MessageHandler, Filters
 from telegram import ChatAction, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 
-
 api_dict = None
-with open('/home/ubuntu/telegram_api.key', 'rb') as f:
-    api_dict = pickle.load(f)
+with open('/run/secrets/api_key', 'r') as f:
+    api_dict = json.loads(f.read())
 Api_Key = api_dict['key']
+
+BOT_NAME = api_dict['name']
+LOGGER = logger(BOT_NAME,BOT_NAME+'.log')
 
 updater = Updater(token=Api_Key)
 dispatcher = updater.dispatcher
@@ -31,7 +34,7 @@ def start(bot, update):
         bot.send_message(chat_id=update.message.chat_id, text=str(
             random_grab.details), disable_web_page_preview=True)
     except Exception as e:
-        print('something went wrong at start\n',
+        LOGGER.log.error('something went wrong at start\n',
               e, '\n', +str(random_grab.name))
         bot.send_message(chat_id=update.message.chat_id,
                          text="something went wrong [0]" + str(random_grab.name))
@@ -74,7 +77,7 @@ def message(bot, update):
             bot.send_message(chat_id=update.message.chat_id, text=str(
                 random_grab.details), disable_web_page_preview=True, reply_markup = next_button_markup)
     except Exception as e:
-        print('something went wrong at message at \n', e)
+        LOGGER.log.error('something went wrong at message at \n', e)
         bot.send_message(chat_id=update.message.chat_id,
                          text="something went wrong [1]" + str(random_grab.name))
 
@@ -93,7 +96,7 @@ def callback_message(bot, update):
             random_grab.details), disable_web_page_preview=True, reply_markup = next_button_markup)
 
     except Exception as e:
-        print('something went wrong at start\n',
+        LOGGER.log.error('something went wrong at start\n',
                 e, '\n', +str(random_grab.name))
         bot.send_message(chat_id=update.callback_query.message.chat.id,
                         text="something went wrong" + str(random_grab.name))
@@ -108,7 +111,7 @@ dispatcher.add_handler(ck_handler)
 dispatcher.add_handler(message_handler)
 dispatcher.add_handler(callback_message_handler)
 updater.start_polling()
-print("started")
+LOGGER.log.error("started")
 
 # updater.start_webhook(listen='0.0.0.0',
 #                       port=8443,

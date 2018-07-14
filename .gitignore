@@ -1,0 +1,20 @@
+# Python cache
+__pycache__
+
+#Binaries
+*.exe
+*.pyc
+*.o
+*.so
+
+# Editor cache
+.vscode
+.idea
+
+# Secret keys
+*.pem
+*.ppk
+
+# Data Files
+*.json
+*.csv

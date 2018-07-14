@@ -1,0 +1,5 @@
+requests
+lxml
+python-telegram-bot
+python-json-logger
+coloredlogs
