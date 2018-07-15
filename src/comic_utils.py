@@ -3,7 +3,7 @@ import comic
 import random
 grabers=[cs.xkcd_grab, cs.explosm_grab, cs.penny_arcade_grab, cs.nedroid_grab,
                 cs.moonbeard_grab, cs.smbc_grab, cs.wumo_grab, cs.loading_artist_grab,
-                cs.cad_grab, cs.adamathome_grab]
+                cs.cad_grab, cs.adamathome_grab, cs.commitstrip_grab]
 comic_details = {graber:graber().details for graber in grabers}
 comic_graber_names = {graber().name:graber for graber in grabers}
 

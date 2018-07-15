@@ -137,3 +137,12 @@ class adamathome_grab(xkcd_grab):
 
     def get_img_url(self,parsed):
         return parsed.xpath('string(//*[@id="js-item-start"]/div/div[1]/div[1]/a/picture/img/@src)')
+
+class commitstrip_grab(xkcd_grab):
+    def __init__(self):
+        self.name="http://commitstrip_grab"
+        self.rurl="http://www.commitstrip.com/en/?random=1"
+        self.details=comic('commitstrip',['Thomas Gx (Stories and texts)','Mark Nightingale (Translator)'],'http://www.commitstrip.com')
+
+    def get_img_url(self,parsed):
+        return parsed.xpath('string(//*[contains(@class,entry-content)]/p/img/@src)')
