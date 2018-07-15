@@ -107,7 +107,7 @@ class loading_artist_grab(xkcd_grab):
         self.details=comic('Loading Artist','Gregor Czaykowski','https://loadingartist.com/')
 
     def get_img_url(self,parsed):
-        return parsed.xpath('string(//div[@class="comic"]/a/img/@src)')
+        return "https://loadingartist.com"+parsed.xpath("string(//*[contains(@class,comic)]/div/div[2]/div/a/img/@src)")
 
 class cad_grab(xkcd_grab):
     """
