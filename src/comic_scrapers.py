@@ -4,7 +4,7 @@ import datetime as dt
 import random
 from comic import comic
 from json import loads
-
+user_agent = {'User-agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0'}
 #week_map={'sunday':0,'monday':1,'tuesday':2,'wednesday':3,'thursday':4,'friday':5,'saturday':6}
 class xkcd_grab:
     """
@@ -19,7 +19,7 @@ class xkcd_grab:
         return str(self.details)
 
     def request_page(self,url):
-         page=requests.get(url)
+         page=requests.get(url,headers=user_agent)
          parsed=ht.document_fromstring(page.content)
          return parsed
 
@@ -103,11 +103,12 @@ class wumo_grab(penny_arcade_grab):
 class loading_artist_grab(xkcd_grab):
     def __init__(self):
         self.name="loading_artist_grab"
-        self.rurl="https://loadingartist.com/random"
+        self.rurl="http://loadingartist.com/random"
         self.details=comic('Loading Artist','Gregor Czaykowski','https://loadingartist.com/')
 
     def get_img_url(self,parsed):
-        return "https://loadingartist.com"+parsed.xpath("string(//*[contains(@class,comic)]/div/div[2]/div/a/img/@src)")
+        print("http://loadingartist.com"+parsed.xpath("string(//*[contains(@class,comic)]/div/div[2]/div/a/img/@src)"))
+        return "http://loadingartist.com"+parsed.xpath("string(//*[contains(@class,comic)]/div/div[2]/div/a/img/@src)")
 
 class cad_grab(xkcd_grab):
     """
@@ -119,7 +120,7 @@ class cad_grab(xkcd_grab):
         self.details=comic('Ctrl+Alt+Del','Tim Buckley','https://cad-comic.com/')
 
     def request_page(self,url):
-         page=requests.get(url)
+         page=requests.get(url,headers=user_agent)
          return page
 
     def get_img_url(self,parsed):

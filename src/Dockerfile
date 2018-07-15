@@ -5,4 +5,4 @@ RUN python -m pip install -r /requirements.txt
 RUN apk del build-base
 ADD . /comicbot/
 WORKDIR /comicbot
-RUN sh
+CMD ["python","comic_bot.py"]

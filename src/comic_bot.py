@@ -34,8 +34,8 @@ def start(bot, update):
         bot.send_message(chat_id=update.message.chat_id, text=str(
             random_grab.details), disable_web_page_preview=True)
     except Exception as e:
-        LOGGER.log.error('something went wrong at start\n',
-              e, '\n', +str(random_grab.name))
+        LOGGER.log.error('something went wrong at start\n'+
+              e+ '\n'+str(random_grab.name))
         bot.send_message(chat_id=update.message.chat_id,
                          text="something went wrong [0]" + str(random_grab.name))
 
@@ -77,7 +77,7 @@ def message(bot, update):
             bot.send_message(chat_id=update.message.chat_id, text=str(
                 random_grab.details), disable_web_page_preview=True, reply_markup = next_button_markup)
     except Exception as e:
-        LOGGER.log.error('something went wrong at message at \n', e)
+        LOGGER.log.error('something went wrong at message at \n'+e)
         bot.send_message(chat_id=update.message.chat_id,
                          text="something went wrong [1]" + str(random_grab.name))
 
@@ -96,8 +96,8 @@ def callback_message(bot, update):
             random_grab.details), disable_web_page_preview=True, reply_markup = next_button_markup)
 
     except Exception as e:
-        LOGGER.log.error('something went wrong at start\n',
-                e, '\n', +str(random_grab.name))
+        LOGGER.log.error('something went wrong at start\n'+
+                e+ '\n' +str(random_grab.name))
         bot.send_message(chat_id=update.callback_query.message.chat.id,
                         text="something went wrong" + str(random_grab.name))
     bot.answer_callback_query(update.callback_query.id)
